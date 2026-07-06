@@ -1,4 +1,4 @@
-Aviation × Data Strategy Portfolio
+                                                                Aviation × Data Strategy Portfolio
 
 A highly customized, high-performance personal portfolio website built to showcase the strategic intersection of **Aviation Management** and **Management Information Systems (MIS)**. Designed with a bespoke, airport-instrumentation-inspired dark UI theme, this project serves as a comprehensive digital resume and vision statement for high-level business intelligence, data strategy, and future holding management roles.
 
