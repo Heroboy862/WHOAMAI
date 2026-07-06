@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Metehan Merdan — Aviation × Data Strategy</title>
+<meta name="description" content="Aviation Management & Management Information Systems — data analytics, business analysis, and technology strategy.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0e16;
+    --surface:#10141f;
+    --surface-2:#161b28;
+    --line:#232a3a;
+    --line-soft:#1a2030;
+    --text:#eef2f7;
+    --text-dim:#8b95a8;
+    --text-faint:#586074;
+    --amber:#f2b84b;
+    --blue:#5db3ec;
+    --font-display:'Fraunces', serif;
+    --font-body:'Inter', sans-serif;
+    --font-mono:'IBM Plex Mono', monospace;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
+  }
+
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+
+  ::selection{background:var(--amber); color:#0a0e16;}
+
+  :focus-visible{outline:2px solid var(--amber); outline-offset:3px;}
+
+  .wrap{
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:fixed; top:0; left:0; right:0;
+    z-index:100;
+    background:rgba(10,14,22,0.82);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line-soft);
+    transition:border-color .3s ease;
+  }
+  .nav-inner{
+    max-width:1180px; margin:0 auto; padding:0 32px;
+    height:76px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .logo{
+    display:flex; flex-direction:column; line-height:1.1;
+  }
+  .logo .mark{
+    font-family:var(--font-display); font-weight:600; font-size:20px; letter-spacing:0.02em;
+  }
+  .logo .code{
+    font-family:var(--font-mono); font-size:10px; letter-spacing:0.14em; color:var(--amber); margin-top:2px;
+  }
+  nav.links{
+    display:flex; gap:40px; align-items:center;
+  }
+  nav.links a{
+    font-family:var(--font-mono);
+    font-size:12px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--text-dim);
+    position:relative;
+    padding-bottom:4px;
+    transition:color .25s ease;
+  }
+  nav.links a::after{
+    content:'';
+    position:absolute; left:0; bottom:0;
+    width:0; height:1px; background:var(--amber);
+    transition:width .3s ease;
+  }
+  nav.links a:hover, nav.links a.active{color:var(--text);}
+  nav.links a:hover::after, nav.links a.active::after{width:100%;}
+
+  .menu-btn{
+    display:none;
+    flex-direction:column; gap:5px;
+    background:none; border:none; cursor:pointer; padding:8px;
+  }
+  .menu-btn span{width:22px; height:1.5px; background:var(--text); display:block; transition:all .3s ease;}
+  .menu-btn.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg);}
+  .menu-btn.open span:nth-child(2){opacity:0;}
+  .menu-btn.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:200px 0 120px;
+    position:relative;
+    border-bottom:1px solid var(--line-soft);
+  }
+  .hero::before{
+    content:'';
+    position:absolute; inset:0;
+    background-image:
+      linear-gradient(var(--line-soft) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+    background-size:64px 64px;
+    opacity:0.35;
+    mask-image:linear-gradient(to bottom, black, transparent 85%);
+    pointer-events:none;
+  }
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:12px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--amber);
+    display:flex; align-items:center; gap:10px;
+    margin-bottom:28px;
+  }
+  .eyebrow .dot{width:6px; height:6px; border-radius:50%; background:var(--amber); box-shadow:0 0 8px var(--amber);}
+
+  .hero h1{
+    font-family:var(--font-display);
+    font-weight:500;
+    font-size:clamp(38px, 6vw, 74px);
+    line-height:1.08;
+    letter-spacing:-0.01em;
+    max-width:920px;
+    position:relative;
+  }
+  .hero h1 em{
+    font-style:italic;
+    color:var(--amber);
+    font-weight:400;
+  }
+  .hero p.lede{
+    margin-top:28px;
+    max-width:600px;
+    font-size:18px;
+    color:var(--text-dim);
+    font-weight:400;
+    position:relative;
+  }
+
+  /* Split-flap role display */
+  .flap-row{
+    margin-top:48px;
+    display:flex; align-items:center; gap:14px;
+    font-family:var(--font-mono);
+    font-size:13px;
+    color:var(--text-faint);
+    position:relative;
+  }
+  .flap{
+    background:var(--surface);
+    border:1px solid var(--line);
+    padding:9px 16px;
+    color:var(--text);
+    letter-spacing:0.04em;
+    min-width:230px;
+    text-align:left;
+    position:relative;
+    overflow:hidden;
+  }
+  .flap span{display:block;}
+
+  /* Instrument strip */
+  .instrument-strip{
+    margin-top:80px;
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    border:1px solid var(--line);
+    position:relative;
+  }
+  .instrument-strip .cell{
+    padding:22px 28px;
+    border-right:1px solid var(--line);
+  }
+  .instrument-strip .cell:last-child{border-right:none;}
+  .instrument-strip .cell .label{
+    font-family:var(--font-mono); font-size:10px; letter-spacing:0.14em;
+    text-transform:uppercase; color:var(--text-faint); margin-bottom:8px;
+  }
+  .instrument-strip .cell .val{
+    font-family:var(--font-display); font-size:22px; color:var(--text); font-weight:500;
+  }
+  .instrument-strip .cell .sub{
+    font-family:var(--font-mono); font-size:11px; color:var(--blue); margin-top:6px;
+  }
+
+  /* ---------- SECTION FRAME ---------- */
+  section.exhibit{
+    padding:140px 0;
+    border-bottom:1px solid var(--line-soft);
+    position:relative;
+  }
+  section.exhibit:last-of-type{border-bottom:none;}
+
+  .exhibit-head{
+    display:flex; align-items:baseline; gap:18px;
+    margin-bottom:56px;
+  }
+  .exhibit-num{
+    font-family:var(--font-mono);
+    font-size:12px;
+    color:var(--amber);
+    letter-spacing:0.1em;
+    white-space:nowrap;
+  }
+  .exhibit-line{
+    flex:1; height:1px; background:var(--line);
+  }
+  .exhibit-tag{
+    font-family:var(--font-mono);
+    font-size:12px;
+    letter-spacing:0.1em;
+    color:var(--text-faint);
+    text-transform:uppercase;
+  }
+
+  .exhibit-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:80px;
+    align-items:center;
+  }
+  .exhibit-grid.reverse .media{order:2;}
+  .exhibit-grid.reverse .content{order:1;}
+
+  .content h2{
+    font-family:var(--font-display);
+    font-weight:500;
+    font-size:clamp(28px, 3.4vw, 42px);
+    line-height:1.18;
+    margin-bottom:24px;
+    letter-spacing:-0.01em;
+  }
+  .content p{
+    color:var(--text-dim);
+    font-size:16.5px;
+    max-width:520px;
+  }
+
+  .media{
+    position:relative;
+    border:1px solid var(--line);
+    padding:10px;
+    background:var(--surface);
+  }
+  .media img{
+    width:100%; height:auto; display:block;
+    filter:saturate(1.02);
+  }
+  .media .frame-label{
+    position:absolute; bottom:22px; left:22px;
+    font-family:var(--font-mono); font-size:10px; letter-spacing:0.12em;
+    color:var(--amber); text-transform:uppercase;
+    background:rgba(10,14,22,0.75);
+    padding:5px 10px;
+    border:1px solid var(--line);
+  }
+
+  /* Skills list */
+  .skill-list{margin-top:36px; display:flex; flex-direction:column; gap:0;}
+  .skill-row{
+    display:grid;
+    grid-template-columns:150px 1fr auto;
+    align-items:center;
+    gap:18px;
+    padding:16px 0;
+    border-top:1px solid var(--line-soft);
+  }
+  .skill-row:last-child{border-bottom:1px solid var(--line-soft);}
+  .skill-row .name{
+    font-family:var(--font-mono);
+    font-size:13px;
+    color:var(--text);
+    letter-spacing:0.02em;
+  }
+  .skill-row .track{
+    height:2px; background:var(--line); position:relative; overflow:hidden;
+  }
+  .skill-row .fill{
+    position:absolute; top:0; left:0; height:100%;
+    background:linear-gradient(90deg, var(--blue), var(--amber));
+    width:0%;
+    transition:width 1.1s cubic-bezier(.16,.84,.44,1);
+  }
+  .skill-row.in-view .fill{width:var(--pct);}
+  .skill-row .pct{
+    font-family:var(--font-mono); font-size:11px; color:var(--text-faint); min-width:40px; text-align:right;
+  }
+
+  /* ---------- GOAL / DESTINATION ---------- */
+  .destination{
+    position:relative;
+    border:1px solid var(--line);
+    overflow:hidden;
+    min-height:560px;
+    display:flex; align-items:flex-end;
+  }
+  .destination img{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+    opacity:0.55;
+  }
+  .destination::before{
+    content:'';
+    position:absolute; inset:0;
+    background:linear-gradient(0deg, rgba(10,14,22,0.96) 10%, rgba(10,14,22,0.55) 55%, rgba(10,14,22,0.25) 100%);
+  }
+  .destination-content{
+    position:relative; z-index:2;
+    padding:56px;
+  }
+  .destination-content .exhibit-tag{margin-bottom:18px; display:block;}
+  .destination-content h2{
+    font-family:var(--font-display);
+    font-weight:500;
+    font-size:clamp(30px, 4vw, 48px);
+    line-height:1.15;
+    max-width:760px;
+    margin-bottom:22px;
+  }
+  .destination-content p{
+    max-width:600px;
+    color:var(--text-dim);
+    font-size:16.5px;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    padding:64px 0 48px;
+  }
+  .footer-grid{
+    display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:32px;
+  }
+  .footer-grid .brand{
+    font-family:var(--font-display); font-size:20px; font-weight:500;
+  }
+  .footer-grid .tag{
+    font-family:var(--font-mono); font-size:11px; color:var(--text-faint); margin-top:6px; letter-spacing:0.08em;
+  }
+  .footer-links{display:flex; gap:28px;}
+  .footer-links a{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:0.08em;
+    color:var(--text-dim); text-transform:uppercase;
+    border-bottom:1px solid transparent;
+    transition:color .25s ease, border-color .25s ease;
+  }
+  .footer-links a:hover{color:var(--amber); border-color:var(--amber);}
+  .footer-bottom{
+    margin-top:40px; padding-top:24px; border-top:1px solid var(--line-soft);
+    font-family:var(--font-mono); font-size:10px; color:var(--text-faint); letter-spacing:0.06em;
+  }
+
+  /* ---------- REVEAL ---------- */
+  .reveal{opacity:0; transform:translateY(28px); transition:opacity .8s ease, transform .8s ease;}
+  .reveal.in-view{opacity:1; transform:translateY(0);}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:860px){
+    .exhibit-grid{grid-template-columns:1fr; gap:40px;}
+    .exhibit-grid.reverse .media{order:1;}
+    .exhibit-grid.reverse .content{order:2;}
+    .instrument-strip{grid-template-columns:1fr;}
+    .instrument-strip .cell{border-right:none; border-bottom:1px solid var(--line);}
+    .instrument-strip .cell:last-child{border-bottom:none;}
+    .skill-row{grid-template-columns:110px 1fr auto;}
+  }
+
+  @media (max-width:720px){
+    .wrap{padding:0 20px;}
+    .nav-inner{padding:0 20px;}
+    nav.links{
+      position:fixed; top:76px; left:0; right:0;
+      background:var(--bg); border-bottom:1px solid var(--line);
+      flex-direction:column; align-items:flex-start; gap:0;
+      max-height:0; overflow:hidden;
+      transition:max-height .35s ease;
+    }
+    nav.links.open{max-height:300px;}
+    nav.links a{width:100%; padding:16px 20px; border-bottom:1px solid var(--line-soft);}
+    nav.links a::after{display:none;}
+    .menu-btn{display:flex;}
+    .hero{padding:150px 0 80px;}
+    section.exhibit{padding:90px 0;}
+    .destination-content{padding:32px 24px;}
+    .flap{min-width:0; width:100%;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav-inner">
+    <div class="logo">
+      <span class="mark">M.T.</span>
+      <span class="code">EXHIBIT&nbsp;SERIES&nbsp;/&nbsp;2026</span>
+    </div>
+    <nav class="links" id="navLinks">
+      <a href="#who" class="nav-link">Who I Am</a>
+      <a href="#skills" class="nav-link">Skills</a>
+      <a href="#goal" class="nav-link">Future Goal</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </nav>
+    <button class="menu-btn" id="menuBtn" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero wrap">
+    <div class="eyebrow"><span class="dot"></span> Aviation Management &amp; Management Information Systems</div>
+    <h1>Bridging aviation precision <em>with</em> data&#8209;driven vision.</h1>
+    <p class="lede"> Aviation Management expert and a student of Management Information Systems, building a career at the intersection of operational rigor and technology strategy.</p>
+
+    <div class="flap-row">
+      <span>Currently:</span>
+      <div class="flap"><span id="flapText">Data Analyst</span></div>
+    </div>
+
+    <div class="instrument-strip reveal">
+      <div class="cell">
+        <div class="label">Origin</div>
+        <div class="val">Aviation Management.</div>
+        <div class="sub">Graduate year: 2025 </div>
+      </div>
+      <div class="cell">
+        <div class="label">Heading</div>
+        <div class="val">Data &amp; Systems</div>
+        <div class="sub">MIS — in progress</div>
+      </div>
+      <div class="cell">
+        <div class="label">Destination</div>
+        <div class="val">Tech Leadership</div>
+        <div class="sub">Big Tech / Aviation</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="exhibit" id="who">
+    <div class="wrap">
+      <div class="exhibit-head reveal">
+        <span class="exhibit-num">EXHIBIT 01</span>
+        <span class="exhibit-line"></span>
+        <span class="exhibit-tag">Origin — Who I Am</span>
+      </div>
+      <div class="exhibit-grid">
+        <div class="media reveal">
+          <img src="images/who_i_am.png" alt="Portrait scene representing a data-driven aviation and technology professional at work">
+          <div class="frame-label">Fig. 01</div>
+        </div>
+        <div class="content reveal">
+          <h2>An operator's discipline, an analyst's mind.</h2>
+          <p>I am a graduate of Aviation Management and a student of Management Information Systems (MIS) — a dual academic path that shapes how I see complex systems: through the lens of operational discipline and structured information flow. My aviation background has trained me to think in terms of safety-critical processes, tight operational windows, and cross-functional coordination. My MIS studies now let me translate that same rigor into the language of data, systems, and business technology. I approach every problem as both an operator and an analyst — someone who understands not just what the data says, but why it matters to the business behind it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="exhibit" id="skills">
+    <div class="wrap">
+      <div class="exhibit-head reveal">
+        <span class="exhibit-num">EXHIBIT 02</span>
+        <span class="exhibit-line"></span>
+        <span class="exhibit-tag">Cruise Altitude — My Skills</span>
+      </div>
+      <div class="exhibit-grid reverse">
+        <div class="content reveal">
+          <h2>Turning data into decisions.</h2>
+          <p>A toolkit built to move from raw operational data to strategic clarity — combining technical depth with the business fluency to make it matter in the boardroom.</p>
+
+          <div class="skill-list">
+            <div class="skill-row" data-pct="90">
+              <span class="name">Data Analytics</span>
+              <div class="track"><div class="fill" style="--pct:90%"></div></div>
+              <span class="pct">90%</span>
+            </div>
+            <div class="skill-row" data-pct="85">
+              <span class="name">Business Analysis</span>
+              <div class="track"><div class="fill" style="--pct:85%"></div></div>
+              <span class="pct">85%</span>
+            </div>
+            <div class="skill-row" data-pct="80">
+              <span class="name">Python</span>
+              <div class="track"><div class="fill" style="--pct:80%"></div></div>
+              <span class="pct">80%</span>
+            </div>
+            <div class="skill-row" data-pct="82">
+              <span class="name">SQL</span>
+              <div class="track"><div class="fill" style="--pct:82%"></div></div>
+              <span class="pct">82%</span>
+            </div>
+            <div class="skill-row" data-pct="88">
+              <span class="name">Power BI</span>
+              <div class="track"><div class="fill" style="--pct:88%"></div></div>
+              <span class="pct">88%</span>
+            </div>
+            <div class="skill-row" data-pct="78">
+              <span class="name">Tableau</span>
+              <div class="track"><div class="fill" style="--pct:78%"></div></div>
+              <span class="pct">78%</span>
+            </div>
+          </div>
+        </div>
+        <div class="media reveal">
+          <img src="images/skills.png" alt="Abstract visualization of data analytics, Python code, and SQL database structures">
+          <div class="frame-label">Fig. 02</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="exhibit" id="goal">
+    <div class="wrap">
+      <div class="exhibit-head reveal">
+        <span class="exhibit-num">EXHIBIT 03</span>
+        <span class="exhibit-line"></span>
+        <span class="exhibit-tag">Destination — My Future Goal</span>
+      </div>
+      <div class="destination reveal">
+        <img src="images/future_goals.png" alt="Visionary corporate boardroom with data charts, symbolizing technology leadership">
+        <div class="destination-content">
+          <span class="exhibit-tag">Leading the intersection of technology and strategy</span>
+          <h2>Where raw data infrastructure meets executive strategy.</h2>
+          <p>My ambition is to become a technology leader and strategist within data-driven organizations — whether in Big Tech or the aviation industry, two sectors where precision, scale, and information systems converge. I aim to be the bridge between raw data infrastructure and executive strategy: someone who doesn't just report on what happened, but shapes what happens next. Long-term, I see myself driving digital transformation initiatives where data isn't just analyzed — it's the foundation of every strategic decision.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="brand">Metehan Merdan</div>
+        <div class="tag">Aviation Management × Management Information Systems</div>
+      </div>
+      <div class="footer-links">
+        <a href="mailto:merdanmert193@gmail.com">Email</a>
+        <a href="[https://www.linkedin.com/in/metehan-merdan](https://www.linkedin.com/in/metehan-merdan)"> linkedin</a>
+        <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'}); return false;">Top ↑</a>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 — Prepared for Samsung Innovation Campus, Lab 2.</div>
+  </div>
+</footer>
+
+<script>
+  // Mobile menu toggle
+  const menuBtn = document.getElementById('menuBtn');
+  const navLinks = document.getElementById('navLinks');
+  menuBtn.addEventListener('click', () => {
+    const isOpen = navLinks.classList.toggle('open');
+    menuBtn.classList.toggle('open', isOpen);
+    menuBtn.setAttribute('aria-expanded', isOpen);
+  });
+  navLinks.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      menuBtn.classList.remove('open');
+      menuBtn.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // Scroll-spy active nav link
+  const sections = ['who','skills','goal'].map(id => document.getElementById(id));
+  const navItems = document.querySelectorAll('.nav-link');
+  const spyObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        navItems.forEach(a => a.classList.remove('active'));
+        const match = document.querySelector('.nav-link[href="#' + entry.target.id + '"]');
+        if(match) match.classList.add('active');
+      }
+    });
+  }, {rootMargin: '-40% 0px -50% 0px', threshold: 0});
+  sections.forEach(s => s && spyObserver.observe(s));
+
+  // Reveal on scroll
+  const revealEls = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('in-view');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, {threshold: 0.15});
+  revealEls.forEach(el => revealObserver.observe(el));
+
+  // Skill bar fill on view
+  const skillRows = document.querySelectorAll('.skill-row');
+  const skillObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('in-view');
+        skillObserver.unobserve(entry.target);
+      }
+    });
+  }, {threshold: 0.4});
+  skillRows.forEach(el => skillObserver.observe(el));
+
+  // Split-flap role rotation
+  const roles = ['Data Analyst', 'Business Analyst', 'Future Tech Strategist'];
+  let roleIdx = 0;
+  const flapText = document.getElementById('flapText');
+  function flipRole(){
+    flapText.style.transition = 'transform .3s ease, opacity .3s ease';
+    flapText.style.transform = 'translateY(-100%)';
+    flapText.style.opacity = '0';
+    setTimeout(() => {
+      roleIdx = (roleIdx + 1) % roles.length;
+      flapText.textContent = roles[roleIdx];
+      flapText.style.transition = 'none';
+      flapText.style.transform = 'translateY(100%)';
+      requestAnimationFrame(() => {
+        flapText.style.transition = 'transform .3s ease, opacity .3s ease';
+        flapText.style.transform = 'translateY(0)';
+        flapText.style.opacity = '1';
+      });
+    }, 300);
+  }
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!prefersReduced){
+    setInterval(flipRole, 3200);
+  }
+
+  // Header border on scroll
+  const header = document.querySelector('header');
+  window.addEventListener('scroll', () => {
+    header.style.borderBottomColor = window.scrollY > 20 ? 'var(--line)' : 'var(--line-soft)';
+  });
+</script>
+
+</body>
+</html>
